@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
-const AddProduct = () => {
+const AddProduct = ( { addNewProduct } ) => {
 
     const [inputObject, setInputObject] = useState({
         title: '',
@@ -20,7 +20,10 @@ const AddProduct = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:8000/api/products', {...inputObject, price: inputObject.price + '$'})
-            .then( result => console.log(result) )
+            .then( result => {
+                console.log(result.data.product)
+                addNewProduct(result.data.product)
+             })
             .catch( err => console.log(err) )
         setInputObject({ title: '', price: '',description: '' })
     }
