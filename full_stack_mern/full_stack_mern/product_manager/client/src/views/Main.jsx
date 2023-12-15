@@ -18,11 +18,16 @@ const Main = () => {
                 console.log(err);
             })
     }, [])
+    const removeFromDOM = (id) => {
+        setProducts(products.filter((product) => {
+            return product._id !== id;
+        }))
+    }
 
     return (
         <>
-            <AddProduct addNewProduct={addNewProduct} />
-            <ProductList products={products} />
+            <AddProduct addNewProduct={ addNewProduct } />
+            <ProductList products={products} removeFromDOM={ removeFromDOM } />
         </>
     );
 }
