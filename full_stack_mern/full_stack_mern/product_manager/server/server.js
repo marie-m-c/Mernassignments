@@ -1,18 +1,20 @@
-const express = require("express")
-const cors = require("cors")
-const app = express()
+const express = require('express');
+const cors = require('cors');
+const app = express();
+const cookieParser = require('cookie-parser');
 
-app.use(express.json(), express.urlencoded({ extended: true }), cors());
+app.use(cookieParser());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(express.json(), express.urlencoded({ extended: true }));
 
+require('dotenv').config();
+require('./config/mongoose.config');
 
-require("dotenv").config()
-require("./config/mongoose.config")
+const port = process.env.PORT;
 
-const port = process.env.PORT
-
- require("./routes/product.routes")(app)
-
+require('./routes/user.routes')(app);
+require('./routes/product.routes')(app);
 
 app.listen(port, () => {
-    console.log(`Server is running on Port ${port}`)
-})
+  console.log(`Server is running on Port ${port}`);
+});
